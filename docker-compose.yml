@@ -1,0 +1,40 @@
+version: "3.9"
+
+services:
+  elib-database:
+    image: postgres:latest
+    container_name: elib-database
+    restart: always
+    ports:
+      - "5432:5432"
+    env_file:
+      - ./backend/.env
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  elib-pgbouncer:
+    image: pgbouncer/pgbouncer
+    container_name: elib-pgbouncer
+    restart: always
+    ports:
+      - "6432:6432"
+    env_file:
+      - ./backend/.env
+    depends_on:
+      - elib-database
+
+  elib-server:
+    build: ./backend
+    container_name: elib-server
+    restart: always
+    command: poetry run uvicorn src.main:app --host 0.0.0.0 --port 8000 --reload
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - elib-database
+      - elib-pgbouncer
+
+volumes:
+  db-data:
