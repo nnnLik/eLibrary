@@ -6,7 +6,7 @@ from fastapi_users.authentication import (
 )
 
 from src.auth.manager import get_user_manager
-from src.auth.models.user import User
+from src.auth.models import User
 from src.config.const import SECRET_AUTH
 
 cookie_transport = CookieTransport(cookie_name="elib", cookie_max_age=3600)
