@@ -7,9 +7,9 @@ from src.routers import routes
 app = FastAPI()
 
 
-@app.get('/')
+@app.get("/")
 async def home():
-    return {'hello': 'world'}
+    return {"hello": "world"}
 
 
 def setup_settings(app):
