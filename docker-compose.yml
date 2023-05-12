@@ -12,17 +12,6 @@ services:
     volumes:
       - db-data:/var/lib/postgresql/data
 
-  elib-pgbouncer:
-    restart: always
-    image: pgbouncer/pgbouncer
-    container_name: elib-pgbouncer
-    ports:
-      - "6432:6432"
-    env_file:
-      - ./backend/.env
-    depends_on:
-      - elib-database
-
   elib-server:
     restart: always
     build: ./backend
@@ -34,7 +23,6 @@ services:
       - "8000:8000"
     depends_on:
       - elib-database
-      - elib-pgbouncer
     
   elib-frontend:
     restart: always
@@ -46,7 +34,6 @@ services:
       - "3000:3000"
     depends_on:
       - elib-database
-      - elib-pgbouncer
       - elib-server
 
 volumes:
