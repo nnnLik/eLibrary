@@ -2,12 +2,11 @@ from datetime import datetime
 from enum import Enum
 from uuid import uuid4
 
+from config.database import Base
+
 from sqlalchemy import Column, Date, ForeignKey, Integer, String
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-
-
-from src.config.database import Base
 
 
 class BookStatus(str, Enum):

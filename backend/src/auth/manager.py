@@ -5,9 +5,10 @@ from fastapi import Depends, Request
 
 from fastapi_users import BaseUserManager, UUIDIDMixin, exceptions, models, schemas
 
+from config.const import SECRET_AUTH
+
 from src.auth.models import User
 from src.auth.utils import get_user_db
-from src.config.const import SECRET_AUTH
 
 
 class UserManager(UUIDIDMixin, BaseUserManager[User, uuid.UUID]):

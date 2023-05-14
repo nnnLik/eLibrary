@@ -4,9 +4,9 @@ from fastapi_users_db_sqlalchemy import SQLAlchemyBaseUserTableUUID
 from fastapi_users_db_sqlalchemy.generics import GUID
 
 from sqlalchemy import Boolean, Column, String
-from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy.orm import Mapped, mapped_column
 
-from src.config.database import Base
+from config.database import Base
 
 
 class User(SQLAlchemyBaseUserTableUUID, Base):
