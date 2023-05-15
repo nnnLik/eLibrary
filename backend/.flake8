@@ -1,0 +1,9 @@
+[flake8]
+exclude =
+    .git
+    __pycache__
+    env.py
+    ./migrations/versions/
+ignore = Q000,B008,A003,VNE003,CCE001
+max-line-length = 120
+max-complexity = 8
