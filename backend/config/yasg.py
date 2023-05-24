@@ -6,7 +6,7 @@ from drf_yasg import openapi
 schema_view = get_schema_view(
     openapi.Info(
         title="eLibrary",
-        default_version='v0.0.1',
+        default_version="v0.0.1",
         description="eLibrary Api",
         license=openapi.License(name="BSD License"),
     ),
@@ -16,10 +16,14 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path(
-        r'swagger(?P<format>\.json|\.yaml)',
+        r"swagger(?P<format>\.json|\.yaml)",
         schema_view.without_ui(cache_timeout=0),
-        name='schema-json'
+        name="schema-json",
     ),
-    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+    path(
+        "swagger/",
+        schema_view.with_ui("swagger", cache_timeout=0),
+        name="schema-swagger-ui",
+    ),
+    path("redoc/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
 ]
