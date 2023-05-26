@@ -12,29 +12,18 @@ services:
     volumes:
       - db-data:/var/lib/postgresql/data
 
-  elib-pgbouncer:
-    restart: always
-    image: pgbouncer/pgbouncer
-    container_name: elib-pgbouncer
-    ports:
-      - "6432:6432"
-    env_file:
-      - ./backend/.env
-    depends_on:
-      - elib-database
-
   elib-server:
     restart: always
     build: ./backend
     container_name: elib-server
-    command: poetry run uvicorn src.main:app --host 0.0.0.0 --port 8000 --reload
+    command: >
+      sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     volumes:
       - ./backend:/app
-    ports:
-      - "8000:8000"
+    expose:
+      - 8000
     depends_on:
       - elib-database
-      - elib-pgbouncer
     
   elib-frontend:
     restart: always
@@ -46,7 +35,22 @@ services:
       - "3000:3000"
     depends_on:
       - elib-database
-      - elib-pgbouncer
+      - elib-server
+
+  elib-nginx:
+    restart: always
+    image: nginx:latest
+    container_name: elib-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/certs:/etc/nginx/certs:ro
+      - ./backend:/app/backend:ro
+    environment:
+      - NGINX_SSL_KEY_PASSWORD=capy
+    depends_on:
       - elib-server
 
 volumes:

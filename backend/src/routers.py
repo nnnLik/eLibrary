@@ -1,14 +1,6 @@
-from fastapi import APIRouter
-
-from src.user.api import router as user_router
+from django.urls import path, include
 
 
-routes = APIRouter()
-
-routes.include_router(
-    user_router,
-    prefix="/user",
-    tags=[
-        "user",
-    ],
-)
+urlpatterns = [
+    path("elibrary/", include("src.elibrary.urls"), name="elibrary"),
+]
