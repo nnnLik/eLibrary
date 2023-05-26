@@ -17,11 +17,11 @@ services:
     build: ./backend
     container_name: elib-server
     command: >
-      sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8888"
+      sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     volumes:
       - ./backend:/app
-    ports:
-      - "8888:8888"
+    expose:
+      - 8000
     depends_on:
       - elib-database
     
@@ -35,6 +35,22 @@ services:
       - "3000:3000"
     depends_on:
       - elib-database
+      - elib-server
+
+  elib-nginx:
+    restart: always
+    image: nginx:latest
+    container_name: elib-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/certs:/etc/nginx/certs:ro
+      - ./backend:/app/backend:ro
+    environment:
+      - NGINX_SSL_KEY_PASSWORD=capy
+    depends_on:
       - elib-server
 
 volumes:
