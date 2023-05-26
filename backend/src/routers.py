@@ -1,4 +1,6 @@
 from django.urls import path, include
 
 
-urlpatterns = []
+urlpatterns = [
+    path("elibrary/", include("src.elibrary.urls"), name="elibrary"),
+]
