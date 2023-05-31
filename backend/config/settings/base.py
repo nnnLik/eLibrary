@@ -13,9 +13,10 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "drf_yasg",
     "django_extensions",
+    "corsheaders",
     "rest_framework",
-    "src.elibrary",
     "src.core",
+    "src.elibrary",
 ]
 
 ROOT_URLCONF = "config.urls"
